@@ -1,0 +1,84 @@
+/* General padding settings */
+body {
+    padding: 20px 5% 0 5%;
+}
+
+/* Different padding settings for small screen size */
+@media only screen and (max-width: 576px) {
+    body {
+        padding: 20px 10px 0 10px;
+    }
+}
+
+/* Different padding settings for mid screen size */
+@media only screen and (min-width : 1200px) {
+    body {
+        padding: 20px 15% 0 15%;
+    }
+}
+
+/* Remove bootstrap default margin for row class */
+.row {
+    margin: 0;
+}
+
+/* Remove bootstrap default padding for container-fluid class */
+.container-fluid {
+    padding: 0;
+}
+
+/* Top navigation-bar */
+#nav1 {
+    background-color: rgb(252, 237, 211);
+    border-radius: 10px 10px 0 0;
+}
+
+/* Bottom navigation-bar */
+#nav2 {
+    background-color: rgb(24, 151, 143);
+    border-radius: 0 0 10px 10px;
+    display: flex;
+}
+
+/* Anchor tags in top navbar */
+#nav1 a {
+    color: rgb(24, 151, 143);
+    opacity: 100%;
+}
+
+/* Effect for anchor tags in top navbar */
+#nav1 a:hover {
+    color: rgb(82, 76, 67);
+}
+
+/* Anchor tags in bottom navbar */
+#nav2 a {
+    color: rgb(233, 218, 193);
+    opacity: 100%;
+}
+
+/* Effect for anchor tags in bottom navbar */
+#nav2 a:hover {
+    color: rgb(82, 76, 67);
+}
+
+/* Brand font settings */
+.navbar-brand {
+    font-family: 'Pacifico';
+    font-size:x-large;
+}
+
+/* Hamburger Menu Icon */
+.navbar-toggler-icon {
+    /* background-color: rgb(24, 151, 143); */
+    background-image: url(
+"data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(24, 151, 143)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+/* To remove blue colored border when active and/or focused */
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+}

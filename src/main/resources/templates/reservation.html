@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacation Now! | Book your next journey with us!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"/>
+  <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/6.1.1/css/all.css} "/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/reservation.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-md" id="nav1">
+  <a th:href="@{/}" class="navbar-brand">Vacation</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbars">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse navbars" id="navbar1">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-user"></i> My Account</a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+          <a sec:authorize="isAnonymous()" class="dropdown-item" href="/signin">Sign In</a>
+          <a sec:authorize="isAnonymous()" class="dropdown-item" href="/register">Register</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" href="/profile">Manage Account</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" href="/my_reservation">My Reservations</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/logout}">Log Out</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<nav class="navbar navbar-expand-md" id="nav2">
+  <a th:href="@{/}" class="navbar-brand">Now!</a>
+  <div class="navbar-collapse collapse navbars" id="navbar2">
+    <ul class="navbar-nav w-100 justify-content-centerr">
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Discover</a>
+      </li>
+      <li class="nav-item">
+        <a href="" class="nav-link">Contact Us</a>
+      </li>
+      <li class="nav-item ml-auto">
+        <a class="nav-link" href="#"> <i class="fa-solid fa-hotel"></i> +Add Your Hotel</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container-fluid reservationContainer">
+  <div class="row reservationSummary">
+    <h4>
+      Reservation Summary
+    </h4>
+    <table class="table">
+      <tbody>
+      <tr>
+        <td>Hotel Name</td>
+        <td th:text="*{hotelSummary.getName()}">Cell</td>
+      </tr>
+      <tr>
+        <td>Hotel Star</td>
+        <td th:text="*{hotelSummary.getStars()}">Cell</td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td th:text="${hotelSummary.getAddress().getStreetLine1() + ', ' + hotelSummary.getAddress().getCity() + ' '
+        + hotelSummary.getAddress().getState() + ', ' + hotelSummary.getAddress().getPostcode().value}"></td>
+      </tr>
+      <tr>
+        <td>Check-in Date</td>
+        <td th:text="*{reservationDTO.getDateFrom()}"></td>
+      </tr>
+      <tr>
+        <td>Check-out Date</td>
+        <td th:text="*{reservationDTO.getDateTo()}">Cell</td>
+      </tr>
+      <tr>
+        <td># of Guest</td>
+        <td th:text="*{reservationDTO.getAdult()+reservationDTO.getKid()}"></td>
+      </tr>
+      <tr>
+        <td>Price</td>
+        <td th:text="'$' + *{totalPrice}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <form th:action="@{/hotels/__${hotelSummary.getId()}__/make_reservation}" th:object="${guestDTO}">
+    <div class="row guestInfo">
+      <h4>
+        Guest Info
+      </h4>
+      <table class="table">
+          <thead>
+          <tr>
+            <th></th>
+            <th>First Name</th>
+            <th>Last Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="guest, i : *{guestList}">
+            <td th:text="${guest.isChild()} ? 'Kid #' + ${i.index + 1}: 'Adult #' + ${i.index + 1}"></td>
+            <td>
+              <input class="form-control" id="firstName" type="text" placeholder="First Name" th:field="*{guestList[__${i.index}__].firstName}">
+            </td>
+            <td>
+              <input class="form-control" id="lastName" type="text" placeholder="Last Name" th:field="*{guestList[__${i.index}__].lastName}">
+            </td>
+          </tr>
+          </tbody>
+      </table>
+    </div>
+    <div class="row payment">
+      <div class="row">
+        <h4>
+          Payment
+        </h4>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="cc-name">Name on card</label>
+          <input type="text" class="form-control" id="cc-name" placeholder="" required>
+          <small class="text-muted">Full name as displayed on card</small>
+          <div class="invalid-feedback">
+            Name on card is required
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="cc-number">Credit card number</label>
+          <input type="text" class="form-control" id="cc-number" placeholder="" required>
+          <div class="invalid-feedback">
+            Credit card number is required
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <label for="cc-expiration">Expiration</label>
+          <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+          <div class="invalid-feedback">
+            Expiration date required
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="cc-expiration">CVV</label>
+          <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+          <div class="invalid-feedback">
+            Security code required
+          </div>
+        </div>
+      </div>
+    </div>
+      <button type="submit" class="btn btn-primary " id="bookNowButton">Make Payment</button>
+    </form>
+  </div>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/momentjs/min/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>

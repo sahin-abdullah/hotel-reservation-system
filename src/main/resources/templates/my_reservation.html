@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacation Now! | Book your next journey with us!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"/>
+  <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/6.1.1/css/all.css} "/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/reservation.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-md" id="nav1">
+  <a th:href="@{/}" class="navbar-brand">Vacation</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbars">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse navbars" id="navbar1">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-user"></i> My Account</a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+          <a sec:authorize="isAnonymous()" class="dropdown-item" href="./signin">Sign In</a>
+          <a sec:authorize="isAnonymous()" class="dropdown-item" href="./register">Register</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" href="./profile">Manage Account</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" href="#">My Reservations</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/logout}">Log Out</a>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+<nav class="navbar navbar-expand-md" id="nav2">
+  <a th:href="@{/}" class="navbar-brand">Now!</a>
+  <div class="navbar-collapse collapse navbars" id="navbar2">
+    <ul class="navbar-nav w-100 justify-content-centerr">
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Discover</a>
+      </li>
+      <li class="nav-item">
+        <a href="" class="nav-link">Contact Us</a>
+      </li>
+      <li class="nav-item ml-auto">
+        <a class="nav-link" href="#"> <i class="fa-solid fa-hotel"></i> +Add Your Hotel</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container-fluid reservationContainer">
+  <div class="row reservationSummary">
+    <p style="font-size: large">My Reservation</p>
+    <table class="table">
+        <thead>
+        <tr>
+          <th>Hotel Name</th>
+          <th>Hotel Star</th>
+          <th>Check-in Date</th>
+          <th>Check-out Date</th>
+          <th>Thinking to Cancel?</th>
+        </tr>
+      </thead>
+        <tbody>
+          <tr th:each="myReservation : ${myReservationList.getMyReservationDTOList()}">
+            <form th:action="@{/cancel_reservation/__${myReservation.getId()}__}" method="POST">
+            <td th:text="${myReservation.getHotelName()}"></td>
+            <td th:text="${myReservation.getHotelStar()}"></td>
+            <td th:text="${myReservation.getCheckInDate()}"></td>
+            <td th:text="${myReservation.getCheckOutDate()}"></td>
+            <td ><button type="submit" class="btn btn-primary">Cancel</button></td>
+            </form>
+          </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/momentjs/min/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>

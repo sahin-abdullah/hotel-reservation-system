@@ -1,0 +1,25 @@
+#signinFrame {
+    margin-top: 20px;
+    background-color: aliceblue;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.container-fluid > .row {
+    justify-content: center;
+    align-items: center;
+}
+
+#signinContainer {
+    padding: 50px 20px 50px 150px;
+}
+
+#signinContainer form {
+    margin-bottom: 20px;;
+}
+
+#userEmail, #userPassword {
+    width: 250px;
+}

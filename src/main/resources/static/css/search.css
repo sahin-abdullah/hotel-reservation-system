@@ -1,0 +1,14 @@
+.listing-container {
+    background-color: aliceblue;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px 20px 20px 20px;
+}
+
+.product > div {
+    padding: 10px 0 10px 0;
+}
+
+#seeButton {
+    height: 40px;
+}

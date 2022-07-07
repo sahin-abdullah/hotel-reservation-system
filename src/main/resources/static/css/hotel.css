@@ -1,0 +1,25 @@
+.hotel-container {
+    background-color: aliceblue;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px 20px 20px 20px;
+    height: 80vh;
+    /* display: flex; */
+}
+
+#hotelInfo > div {
+    padding-left: 20px;
+    justify-content: left;
+}
+
+.carousel .carousel-item {
+    /*height: 25vh;*/
+}
+
+.col-md-5 {
+    padding-left: 0;
+}
+
+.error {
+    color: red;
+}

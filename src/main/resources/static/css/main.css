@@ -1,0 +1,90 @@
+
+#promotion {
+    margin-top: 20px;;
+}
+
+#prom-header {
+    margin-bottom: 20px;
+}
+
+#ind-deals {
+    min-height: 20vh;
+    min-width: 100%;
+    display: flex;
+}
+
+#ind-deals > div {
+    flex: 1;
+    border-radius: 10px;
+    margin: 0 10px;
+}
+
+#ind-deals > div:first-of-type {
+    margin-left: 0;
+}
+
+#ind-deals > div:last-of-type {
+    margin-right: 0;
+}
+
+#ind-deals > div > h5 {
+    text-align: right;
+    color: white;
+}
+
+#firstDeal {
+    background-image: url(../images/atlanta.webp);
+    background-size: cover;
+    background-color: white;
+    background-position: center;
+    transition: 0.7s;
+    background-repeat: no-repeat;
+}
+
+#firstDeal:hover {
+    transform: scale(1.05);
+    background-blend-mode:luminosity;
+}
+
+#secondDeal {
+    background-image: url(../images/miami.jpg);
+    background-size: cover;
+    background-color: white;
+    background-position: center;
+    transition: 0.7s;
+    background-repeat: no-repeat;
+}
+
+#secondDeal:hover {
+    transform: scale(1.05);
+    background-blend-mode:luminosity;
+}
+
+#thirdDeal {
+    background-image: url(../images/sandiego.jpg);
+    background-size: cover;
+    background-color: white;
+    background-position: center;
+    transition: 0.7s;
+    background-repeat: no-repeat;
+}
+
+#thirdDeal:hover {
+    transform: scale(1.05);
+    background-blend-mode:luminosity;
+}
+
+@media only screen and (max-width : 768px) {
+    #ind-deals {
+        display: flex;
+        flex-flow: column;
+        min-height: 60vh;
+    }
+
+    #ind-deals > div {
+        flex: 1;
+        border-radius: 10px;
+        margin: 0;
+    }
+}
+

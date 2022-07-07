@@ -1,0 +1,9 @@
+.reservationContainer {
+    background-color: aliceblue;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.reservationSummary {
+    padding: 20px 20px 20px 20px;
+}

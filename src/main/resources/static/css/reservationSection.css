@@ -1,0 +1,88 @@
+#main {
+    margin-top: 20px;
+    /* background-color: rgb(249, 249, 249); */
+    height: 25vh;
+    border-radius: 10px;
+    background-image: url(../images/bg.jpg);
+    background-size: cover;
+    background-position-y: 75%;
+}
+
+/* Each individual input elements */
+.reservationForm {
+    width: 200px;
+    height: 35px;
+    margin-left: 25px;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: rgb(24, 151, 143);
+    font-size: medium;
+    font-family: inherit;
+    color: gray;
+}
+
+/* Hover effect for each individual input element */
+.reservationForm:hover {
+    box-shadow: 0 0 5px 5px rgb(252, 237, 211);
+}
+
+/* Click effect for each individual input element */
+.reservationForm:focus {
+    box-shadow: 0 0 5px 5px rgb(24, 151, 143);
+    outline: none;
+}
+
+#reservationContainer > div {
+    position: relative;
+    align-items: center;
+    display: inline-flex;
+}
+
+#reservationContainer > div > i {
+    position: absolute;
+    left: 35px;
+    top: 10px;
+    color: gray;
+}
+
+#destination {
+    padding-left: 30px;
+}
+
+.guestSelect {
+    width: 120px;
+    padding-left: 35px;
+}
+
+#findHotelButton {
+    background-color: rgb(252, 237, 211);
+    padding-left: 20px;
+    width:120px;
+    color: black;
+}
+
+#findHotelButton:focus {
+    transition: all 0.5s;
+    box-shadow: 0 0 7px 7px white;
+}
+
+#findHotelButton:active::after {
+    box-shadow: 0;
+}
+
+#dateRange {
+    background-color: white;
+    width:270px;
+    padding-left: 40px;
+}
+
+#guestButton {
+    background-color: white;
+}
+
+#motto > h2 {
+    color: white;
+}

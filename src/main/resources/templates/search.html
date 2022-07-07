@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacation Now! | Book your next journey with us!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"/>
+  <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/6.1.1/css/all.css} "/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/search.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-md" id="nav1">
+  <a th:href="@{/}" class="navbar-brand">Vacation</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbars">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse navbars" id="navbar1">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-user"></i> My Account</a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+          <a sec:authorize="isAnonymous()" class="dropdown-item" href="/signin">Sign In</a>
+          <a sec:authorize="isAnonymous()" class="dropdown-item" href="/register">Register</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" href="/profile">Manage Account</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" href="/my_reservation">My Reservations</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/logout}">Log Out</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<nav class="navbar navbar-expand-md" id="nav2">
+  <a th:href="@{/}" class="navbar-brand">Now!</a>
+  <div class="navbar-collapse collapse navbars" id="navbar2">
+    <ul class="navbar-nav w-100 justify-content-centerr">
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Discover</a>
+      </li>
+      <li class="nav-item">
+        <a href="" class="nav-link">Contact Us</a>
+      </li>
+      <li class="nav-item ml-auto">
+        <a class="nav-link" href="#"> <i class="fa-solid fa-hotel"></i> +Add Your Hotel</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container-fluid listing-container">
+  <div class="row product border border-left-0 border-right-0 w-100" th:each="hotel : ${hotelDTO}">
+    <div class="col-md-3 border border-bottom-0 border-top-0 border-left-0">
+      <a th:href="@{/hotels/{id}(id=${hotel.getId})}" >
+        <img th:src="@{${'/images/hotels/' + hotel.varName + '/' + hotel.imageURI}}" class="img-thumbnail">
+      </a>
+    </div>
+    <div class="col-md-7 border border-bottom-0 border-top-0 border-left-0">
+      <div class="row h-25">
+        <a th:href="@{/hotels/{id}(id=${hotel.getId})}" style="color: black">
+          <h4 th:text="${hotel.hotelName}"></h4>
+        </a>
+      </div>
+      <div class="row h-25">
+          <span th:text="${hotel.address + ' | ' + hotel.distance} + ' miles away'"></span>
+      </div>
+      <div class="row h-50">
+        <h5>Rooms Available:</h5>
+        <ul>
+          <li th:each="room : ${hotel.roomSet}" th:text="${room.name()}"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="row h-25"><span th:text="${hotel.star}"></span></div>
+      <div class="row h-50">
+        <span th:text="${'Starting from $' + hotel.getMinPrice()}"></span>
+      </div>
+      <div class="row h-25">
+        <a class="btn btn-outline-primary" th:href="@{/hotels/{id}(id=${hotel.getId})}" id="seeButton" role="button">See Availability</a>
+      </div>
+    </div>
+  </div>
+</div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination" >
+    <li class="page-item" th:each="i : ${#numbers.sequence(0, paging)}">
+      <a class="page-link" th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
+                           th:href="${urlBuilder.replaceQueryParam('pageNo', i).build(true).toString()}"
+                           th:text="${i} + 1">
+      </a>
+    </li>
+  </ul>
+</nav>
+</body>
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/momentjs/min/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacation Now! | Book your next journey with us!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"/>
+  <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/6.1.1/css/all.css} "/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/reservationSection.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-md" id="nav1">
+  <a th:href="@{/}" class="navbar-brand">Vacation</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbars">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse navbars" id="navbar1">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-user"></i> My Account</a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+          <a sec:authorize="isAnonymous()" class="dropdown-item" href="/signin">Sign In</a>
+          <a sec:authorize="isAnonymous()" class="dropdown-item" href="/register">Register</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" href="/profile">Manage Account</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" href="/my_reservation">My Reservations</a>
+          <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/logout}">Log Out</a>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+<nav class="navbar navbar-expand-md" id="nav2">
+  <a th:href="@{/}" class="navbar-brand">Now!</a>
+  <div class="navbar-collapse collapse navbars" id="navbar2">
+    <ul class="navbar-nav w-100 justify-content-centerr">
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Discover</a>
+      </li>
+      <li class="nav-item">
+        <a href="" class="nav-link">Contact Us</a>
+      </li>
+      <li class="nav-item ml-auto">
+        <a class="nav-link" href="#"> <i class="fa-solid fa-hotel"></i> +Add Your Hotel</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container-fluid" id="main">
+  <div class="row justify-content-center h-50 align-items-center" id="motto">
+    <h2>
+      Book your next journey with us!
+    </h2>
+  </div>
+  <form class="form-inline justify-content-center" id="reservationContainer" th:object="${reservationDTO}" th:action="@{/search/hotels}" method="GET">
+    <div class="column col-dest">
+      <i class="fa-solid fa-location-crosshairs"></i>
+      <input type="text" class="reservationForm" placeholder="Where to?" id="destination" th:field="*{destination}">
+    </div>
+    <div class="column col-cin">
+      <i class="fa-solid fa-calendar-days"></i>
+      <input type="text" name="dateRange" id="dateRange" value="" class="reservationForm" th:field="*{dateRange}"/>
+      <input type="hidden" name="dateFrom" th:field="*{dateFrom}"/>
+      <input type="hidden" name="dateTo" th:field="*{dateTo}"/>
+    </div>
+
+    <div class="column col-guest-adult">
+      <i class="fa-solid fa-user-group"></i>
+      <select class="form-control form-control-md reservationForm guestSelect" th:field="*{adult}">
+        <option th:value="0" selected disabled>Adults</option>
+        <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}">
+        </option>
+      </select>
+    </div>
+    <div class="column col-guest-kid">
+      <i class="fa-solid fa-children"></i>
+      <select class="form-control form-control-md reservationForm guestSelect" th:field="*{kid}">
+        <option th:value="0" selected disabled>Kids</option>
+        <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}">
+        </option>
+      </select>
+    </div>
+    <div class="column col=submit text-center align-items-center">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <button type="submit" class="btn btn-primary reservationForm" id="findHotelButton">Find a Hotel!</button>
+      <!--          <input type="button" class="" name="findHotelButton" id="" value="" />-->
+    </div>
+  </form>
+</div>
+<div class="container-fluid" id="promotion">
+  <div class="row justify-content-center" id="prom-header">
+    <h1>Today's Deals</h1>
+  </div>
+  <div class="row" id="ind-deals">
+    <div class="column" id="firstDeal">
+      <h5>Atlanta</h5>
+    </div>
+    <div class="column" id="secondDeal">
+      <h5>Miami</h5>
+    </div>
+    <div class="column" id="thirdDeal">
+      <h5>San Diego</h5>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/momentjs/min/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/scripts/daterangepicker.js}"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places&callback=initMap"></script>
+<script type="text/javascript" src="/scripts/map_auto_complete.js"></script>
+<script>
+    var $dateRange = $('#dateRange');
+    var date = new Date();
+    $dateRange.daterangepicker({
+        opens: 'left',
+        startDate: moment(date),
+        endDate: moment(date).add(1,'days')
+    })
+    $dateRange.on('apply.daterangepicker', function (ev, picker) {
+
+        $('input[name="dateFrom"]').val(picker.startDate.format('DD/MM/YYYY'));
+        $('input[name="dateTo"]').val(picker.endDate.format('DD/MM/YYYY'));
+    });
+</script>
+</html>
